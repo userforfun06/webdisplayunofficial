@@ -49,6 +49,7 @@ base {
 repositories {
     mavenCentral()
     maven { url = "https://maven.fabricmc.net/" }
+    maven { url = "https://api.modrinth.com/maven" }
 }
 
 dependencies {
@@ -59,7 +60,8 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-renderer-api-v1:5.0.0+84404cdd82"
 	modImplementation "net.fabricmc.fabric-api:fabric-renderer-indigo:2.0.0+84404cdd82"
 	modImplementation "net.fabricmc.fabric-api:fabric-model-loading-api-v1:4.3.0+ae23723504"
-    implementation files(rootProject.file('run/mods/mcef-fabric-2.1.6-1.21.4.jar'))
+    modCompileOnly "maven.modrinth:mcef:2.1.6-1.21.4"
+    modRuntimeOnly "maven.modrinth:mcef:2.1.6-1.21.4"
 }
 
 processResources {
