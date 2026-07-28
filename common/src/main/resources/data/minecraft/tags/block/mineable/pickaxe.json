@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "webdisplays:screen",
+    "webdisplays:keyboard",
+    "webdisplays:keyboard_right",
+    "webdisplays:remote_controller",
+    "webdisplays:redstone_control",
+    "webdisplays:server"
+  ]
+}

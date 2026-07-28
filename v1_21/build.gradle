@@ -1,0 +1,124 @@
+plugins {
+    id 'fabric-loom'
+    id 'maven-publish'
+}
+
+loom {
+    splitEnvironmentSourceSets()
+    mods {
+        "webdisplays" {
+            sourceSet sourceSets.main
+            sourceSet sourceSets.client
+        }
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java', rootProject.file('common/src/main/java')]
+        }
+        resources {
+            srcDirs = ['src/main/resources', rootProject.file('common/src/main/resources')]
+        }
+    }
+    client {
+        java {
+            srcDirs = ['src/client/java', rootProject.file('common/src/client/java')]
+        }
+        resources {
+            srcDirs = ['src/client/resources', rootProject.file('common/src/client/resources')]
+        }
+    }
+}
+
+tasks.register('ensureClientOutputDirs') {
+    def resDir = file("${buildDir}/resources/client")
+    outputs.dir resDir
+    doLast {
+        resDir.mkdirs()
+    }
+}
+compileClientJava.dependsOn ensureClientOutputDirs
+clientClasses.dependsOn ensureClientOutputDirs
+
+base {
+    archivesName = project.archives_base_name
+}
+
+repositories {
+    flatDir { dirs rootProject.file('run/mods') }
+    mavenCentral()
+    maven { url = "https://maven.fabricmc.net/" }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings loom.officialMojangMappings()
+    modImplementation "net.fabricmc:fabric-loader:${rootProject.loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+    implementation files(rootProject.file('run/mods/mcef-fabric-2.1.6-1.21.jar'))
+}
+
+processResources {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    inputs.property "version", project.version
+    filesMatching("fabric.mod.json") {
+        expand "version": inputs.properties.version
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.release = 21
+}
+
+java {
+    withSourcesJar()
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+    sourceCompatibility = JavaLanguageVersion.of(21)
+    targetCompatibility = JavaLanguageVersion.of(21)
+}
+
+tasks.withType(org.gradle.jvm.tasks.Jar).configureEach {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+remapJar {
+    archiveFileName = "WebDisplays (Unofficial Port fabric)-1.21.jar"
+}
+
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from("${rootProject.projectDir}/LICENSE") {
+        rename { "${it}_${project.base.archivesName}" }
+    }
+}
+
+tasks.named('test') {}
+
+runClient {
+    systemProperty "mcef.libraries.path", "${project.buildDir}/mcef-libraries/windows_amd64"
+}
+
+tasks.register('prepareMcefLibraries') {
+    doLast {
+        def mcefDir = new File("${buildDir}/mcef-libraries/windows_amd64")
+        if (!mcefDir.exists()) {
+            mcefDir.mkdirs()
+        }
+    }
+}
+tasks.named('runClient') { dependsOn 'prepareMcefLibraries' }
+clean { delete "${buildDir}/mcef-libraries" }
+
+publishing {
+    publications {
+        create("mavenJava", MavenPublication) {
+            artifactId = project.archives_base_name
+            from components.java
+        }
+    }
+    repositories {}
+}

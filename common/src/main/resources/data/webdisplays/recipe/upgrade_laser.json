@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [ "UL" ],
+  "key": {
+    "U": {
+      "item": "webdisplays:component_upgrade"
+    },
+    "L": {
+      "item": "webdisplays:component_laserdiode"
+    }
+  },
+  "result": {
+    "id": "webdisplays:upgrade_lasermouse",
+    "count": 1
+  }
+}

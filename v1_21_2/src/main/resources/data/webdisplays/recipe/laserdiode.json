@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "IGI",
+    "IRI",
+    " A "
+  ],
+  "key": {
+    "I": "minecraft:iron_ingot",
+    "G": "minecraft:glowstone_dust",
+    "R": "minecraft:redstone",
+    "A": "minecraft:gold_ingot"
+  },
+  "result": {
+    "id": "webdisplays:component_laserdiode",
+    "count": 2
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "SSS",
+    "STS",
+    "SSS"
+  ],
+  "key": {
+    "S": "minecraft:oak_slab",
+    "T": "minecraft:redstone_torch"
+  },
+  "result": {
+    "id": "webdisplays:component_peripheral",
+    "count": 1
+  }
+}

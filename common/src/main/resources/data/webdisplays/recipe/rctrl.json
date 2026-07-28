@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    " P ",
+    "BBB"
+  ],
+  "key": {
+    "P": {
+      "item": "webdisplays:component_peripheral"
+    },
+    "B": {
+      "item": "minecraft:oak_button"
+    }
+  },
+  "result": {
+    "id": "webdisplays:remote_controller",
+    "count": 1
+  }
+}

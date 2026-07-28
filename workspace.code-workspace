@@ -1,0 +1,30 @@
+{
+    "folders": [
+        {
+            "name": "Root Project",
+            "path": "."
+        },
+        {
+            "name": "v1.21",
+            "path": "v1_21"
+        },
+        {
+            "name": "v1.21.1",
+            "path": "v1_21_1"
+        },
+        {
+            "name": "v1.21.2",
+            "path": "v1_21_2"
+        },
+        {
+            "name": "v1.21.4",
+            "path": "v1_21_4"
+        }
+    ],
+    "settings": {
+        "java.import.gradle.enabled": true,
+        "java.autobuild.enabled": true,
+        "java.configuration.updateBuildConfiguration": "automatic",
+        "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx4G -Xms100m -Xlog:disable"
+    }
+}

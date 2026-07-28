@@ -1,0 +1,25 @@
+{
+  "display": {
+    "icon": { "id": "webdisplays:laserpointer" },
+    "title": { "translate": "advancements.webdisplays.laser.title" },
+    "description": { "translate": "advancements.webdisplays.laser.description" },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "webdisplays:root",
+  "criteria": {
+    "has_laser": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "webdisplays:laserpointer"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

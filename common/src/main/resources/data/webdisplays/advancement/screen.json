@@ -1,0 +1,29 @@
+{
+  "display": {
+    "icon": {
+      "id": "webdisplays:screen"
+    },
+    "title": {
+      "translate": "advancements.webdisplays.screen.title"
+    },
+    "description": {
+      "translate": "advancements.webdisplays.screen.description"
+    },
+    "frame": "task"
+  },
+  "parent": "webdisplays:root",
+  "criteria": {
+    "has_screen": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "webdisplays:screen"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+pluginManagement {
+	repositories {
+		maven {
+			name = 'Fabric'
+			url = 'https://maven.fabricmc.net/'
+		}
+		maven {
+			name = 'Modrinth'
+			url = 'https://api.modrinth.com/maven'
+		}
+		mavenCentral()
+		gradlePluginPortal()
+	}
+
+	resolutionStrategy {
+		eachPlugin {
+			if (it.requested.id.id == 'net.fabricmc.fabric-loom') {
+				useModule("net.fabricmc:fabric-loom-gradle-plugin:${it.requested.version}")
+			}
+		}
+	}
+}
+
+rootProject.name = 'webdisplays'
+
+include 'v1_21'
+include 'v1_21_1'
+include 'v1_21_2'
+include 'v1_21_4'

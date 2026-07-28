@@ -1,0 +1,19 @@
+plugins {
+    id 'fabric-loom' version "${loom_version}" apply false
+    id 'maven-publish'
+}
+
+subprojects {
+    apply plugin: 'java'
+
+    version = rootProject.mod_version
+    group = rootProject.maven_group
+}
+
+tasks.register('buildAll') {
+    group = 'build'
+    description = 'Builds all sub-version mod jars'
+    subprojects.each { sp ->
+        if (sp.name != 'common') dependsOn sp.tasks.named('build')
+    }
+}

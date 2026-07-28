@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [ "BBB" ],
+  "key": {
+    "B": "webdisplays:component_batcell"
+  },
+  "result": {
+    "id": "webdisplays:component_batpack",
+    "count": 1
+  }
+}

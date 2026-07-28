@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "DED",
+    "ENE",
+    "DED"
+  ],
+  "key": {
+    "D": "minecraft:diamond",
+    "E": "minecraft:ender_eye",
+    "N": "minecraft:netherite_ingot"
+  },
+  "result": {
+    "id": "webdisplays:ownerthief",
+    "count": 1
+  }
+}

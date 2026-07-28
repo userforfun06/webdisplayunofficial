@@ -1,0 +1,22 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "refmap": "client-webdisplays-refmap.json",
+  "package": "net.montoyo.wd.mixins",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "MouseHandlerMixin",
+    "OverlayMixin",
+    "CameraMixin",
+    "CameraAccessor",
+    "ItemInHandRendererMixin",
+    "ScreenDeferredMixin",
+    "HandDeferredMixin",
+    "MCEFDarkModeMixin",
+    "ScreenAccessor",
+    "ContainerScreenAccessor"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

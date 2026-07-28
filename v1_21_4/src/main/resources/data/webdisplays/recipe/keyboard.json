@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "KKK",
+    "KPK",
+    "KKK"
+  ],
+  "key": {
+    "K": "webdisplays:component_stonekey",
+    "P": "webdisplays:component_peripheral"
+  },
+  "result": {
+    "id": "webdisplays:keyboard",
+    "count": 1
+  }
+}
