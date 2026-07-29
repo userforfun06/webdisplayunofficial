@@ -88,8 +88,15 @@ public class ClientProxy extends SharedProxy implements ResourceManagerReloadLis
 	}
 
 	public static void renderCrosshair(Options options, int screenWidth, int screenHeight, int offset, GuiGraphics poseStack, CallbackInfo ci) {
-		ItemStack stack = Minecraft.getInstance().player.getMainHandItem();
-		ItemStack stack1 = Minecraft.getInstance().player.getOffhandItem();
+		Minecraft mc = Minecraft.getInstance();
+
+		if (mc.screen instanceof GuiKeyboard) {
+			ci.cancel();
+			return;
+		}
+
+		ItemStack stack = mc.player.getMainHandItem();
+		ItemStack stack1 = mc.player.getOffhandItem();
 
 		if (!(stack.getItem() instanceof ItemLaserPointer ||
 				stack1.getItem() instanceof ItemLaserPointer))
@@ -103,8 +110,6 @@ public class ClientProxy extends SharedProxy implements ResourceManagerReloadLis
 			ci.cancel();
 			return;
 		}
-
-		Minecraft mc = Minecraft.getInstance();
 
 		BlockHitResult result = raycast(64.0);
 

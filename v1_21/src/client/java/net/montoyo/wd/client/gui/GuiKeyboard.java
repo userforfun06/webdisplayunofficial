@@ -10,6 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.client.Camera;
+import net.minecraft.client.gui.GuiGraphics;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.GameRenderer;
 import com.mojang.math.Axis;
@@ -22,6 +23,7 @@ import net.montoyo.wd.client.gui.controls.Button;
 import net.montoyo.wd.client.gui.controls.Control;
 import net.montoyo.wd.client.gui.controls.Label;
 import net.montoyo.wd.client.gui.loading.FillControl;
+import net.montoyo.wd.client.renderers.ScreenRenderer;
 import net.montoyo.wd.entity.ScreenBlockEntity;
 import net.montoyo.wd.entity.ScreenData;
 import net.montoyo.wd.net.server_bound.C2SMessageScreenCtrl;
@@ -126,6 +128,9 @@ public class GuiKeyboard extends WDScreen {
         KeyboardCamera.focus(tes, side);
 
         data = tes.getScreen(side);
+        if (data != null && data.browser == null)
+            ScreenRenderer.flushBrowserQueue();
+        data = tes.getScreen(side);
         CefBrowser browser = data != null ? data.browser : null;
         if (browser instanceof MCEFBrowser mcef) {
             var prev = GLFW.glfwSetErrorCallback((error, desc) -> {});
@@ -144,6 +149,11 @@ public class GuiKeyboard extends WDScreen {
                 });
             });
         }
+    }
+
+    @Override
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        super.render(guiGraphics, mouseX, mouseY, partialTick);
     }
 
     @Override

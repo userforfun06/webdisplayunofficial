@@ -96,6 +96,12 @@ public class ClientProxy extends SharedProxy implements ResourceManagerReloadLis
 
 	public static void renderCrosshair(Options options, int screenWidth, int screenHeight, int offset, GuiGraphics poseStack, CallbackInfo ci) {
 		Minecraft mc = Minecraft.getInstance();
+
+		if (mc.screen instanceof GuiKeyboard) {
+			ci.cancel();
+			return;
+		}
+
 		ItemStack stack = mc.player.getMainHandItem();
 		ItemStack stack1 = mc.player.getOffhandItem();
 

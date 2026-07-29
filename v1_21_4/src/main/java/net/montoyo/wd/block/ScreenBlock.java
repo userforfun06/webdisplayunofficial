@@ -144,8 +144,11 @@ public class ScreenBlock extends BaseEntityBlock {
         else if (!(isUpgrade = heldItem.getItem() instanceof IUpgrade))
             return InteractionResult.FAIL;
 
-        if (level.isClientSide)
-            return InteractionResult.SUCCESS; // Trigger hand swing + send to server
+        if (level.isClientSide) {
+            if (heldItem == null)
+                return InteractionResult.CONSUME;
+            return InteractionResult.SUCCESS;
+        }
 
         if (hand == InteractionHand.OFF_HAND && !isUpgrade)
             return InteractionResult.FAIL;
