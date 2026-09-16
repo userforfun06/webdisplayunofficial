@@ -49,8 +49,8 @@ top via `sourceSets`.
 ## Getting the Source
 
 ```bash
-git clone https://github.com/userforfun06/webdisplayunofficial.git
-cd webdisplayunofficial
+git clone https://github.com/userforfun06/webdisplayunofficial.git webdisplays
+cd webdisplays
 ```
 
 ## Opening the Project
