@@ -286,10 +286,48 @@ public class ScreenBlockEntity extends BlockEntity {
  	public ScreenData addScreen(BlockSide side, Vector2i size, @Nullable Vector2i resolution, @Nullable Player owner, boolean sendUpdate) {
 		for (ScreenData scr : screens) {
 			if (scr.side == side) {
+				boolean changed = false;
+				Vector2i targetResolution = resolution;
+
+				if (size != null && (scr.size == null || scr.size.x != size.x || scr.size.y != size.y)) {
+					scr.size = new Vector2i(size.x, size.y);
+					changed = true;
+
+					// If the caller did not provide a resolution, derive the default one
+					// for the new size instead of keeping the old browser resolution.
+					if (targetResolution == null || targetResolution.x < 1 || targetResolution.y < 1) {
+						float psx = ((float) scr.size.x) * 16.f - 4.f;
+						float psy = ((float) scr.size.y) * 16.f - 4.f;
+						targetResolution = new Vector2i((int) (psx * 8.f), (int) (psy * 8.f));
+					}
+				}
+
+				if (targetResolution != null && targetResolution.x >= 1 && targetResolution.y >= 1 &&
+						(scr.resolution == null || scr.resolution.x != targetResolution.x || scr.resolution.y != targetResolution.y)) {
+					scr.resolution = new Vector2i(targetResolution.x, targetResolution.y);
+					scr.clampResolution();
+					changed = true;
+				}
+
 				if (owner != null) {
 					scr.owner = new NameUUIDPair(owner.getGameProfile());
 					if (!level.isClientSide)
 						setChanged();
+				}
+
+				if (changed) {
+					if (level.isClientSide) {
+						// The client can keep its BE across the hasTE state change. Drop the
+						// old browser so it is recreated using the new size/resolution.
+						if (scr.browser != null) {
+							WebDisplays.PROXY.trackBrowser(scr.browser, false);
+							scr.browser.close(true);
+							scr.browser = null;
+						}
+						updateAABB();
+					} else {
+						setChanged();
+					}
 				}
 				return scr;
 			}

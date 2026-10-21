@@ -290,7 +290,7 @@ public class ScreenBlock extends BaseEntityBlock {
         for (Vector3i neighbor : neighbors) {
             if (world.getBlockState(neighbor.toBlock()).getBlock() instanceof ScreenBlock) {
                 for (BlockSide bs : BlockSide.values())
-                    destroySide(world, neighbor.clone(), bs, override, (whoDidThisShit instanceof Player) ? ((Player) whoDidThisShit) : null);
+                    destroySide(world, neighbor.clone(), bs, override, (whoDidThisShit instanceof Player) ? ((Player) whoDidThisShit) : null, true);
             }
         }
     }
@@ -389,6 +389,11 @@ public class ScreenBlock extends BaseEntityBlock {
 
     private void destroySide(Level world, Vector3i pos, BlockSide side, Multiblock.BlockOverride override, Player
             source) {
+        destroySide(world, pos, side, override, source, false);
+    }
+
+    private void destroySide(Level world, Vector3i pos, BlockSide side, Multiblock.BlockOverride override, Player
+            source, boolean removeStaleEntity) {
         Multiblock.findOrigin(world, pos, side, override);
         BlockPos bp = pos.toBlock();
         BlockEntity te = world.getBlockEntity(bp);
@@ -396,6 +401,13 @@ public class ScreenBlock extends BaseEntityBlock {
         if (te instanceof ScreenBlockEntity) {
             ((ScreenBlockEntity) te).onDestroy(source);
             if (!world.isClientSide) {
+                // A newly placed block expands an existing screen by destroying the old
+                // one; the player then re-clicks to create the larger screen. Removing
+                // the old BE is required here: right/up expansions keep the same origin,
+                // so otherwise the re-click finds the stale ScreenData and never rebuilds.
+                if (removeStaleEntity)
+                    world.removeBlockEntity(bp);
+
                 world.setBlock(bp, world.getBlockState(bp).setValue(hasTE, false), Block.UPDATE_ALL_IMMEDIATE); //Destroy tile entity.
             }
         }
