@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "RRR",
+    "RPR"
+  ],
+  "key": {
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "P": {
+      "item": "webdisplays:redstone_control"
+    }
+  },
+  "result": {
+    "id": "webdisplays:redstone_control",
+    "count": 1
+  }
+}

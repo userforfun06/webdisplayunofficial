@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "PG"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:green_dye"
+    },
+    "P": {
+      "item": "webdisplays:component_peripheral"
+    }
+  },
+  "result": {
+    "id": "webdisplays:server",
+    "count": 1
+  }
+}

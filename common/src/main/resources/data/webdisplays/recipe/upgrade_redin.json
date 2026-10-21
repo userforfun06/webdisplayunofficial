@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [ "UR" ],
+  "key": {
+    "U": {
+      "item": "webdisplays:component_upgrade"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "result": {
+    "id": "webdisplays:upgrade_redstone_input",
+    "count": 1
+  }
+}

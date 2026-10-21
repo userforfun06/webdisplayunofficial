@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "RPR",
+    "PCP",
+    "RPR"
+  ],
+  "key": {
+    "R": "minecraft:redstone",
+    "P": "minecraft:paper",
+    "C": "minecraft:copper_ingot"
+  },
+  "result": {
+    "id": "webdisplays:component_badextcard",
+    "count": 1
+  }
+}

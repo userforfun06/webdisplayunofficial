@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "R  ",
+    "S  ",
+    "EB "
+  ],
+  "key": {
+    "R": "minecraft:redstone",
+    "S": "minecraft:stick",
+    "E": "minecraft:ender_pearl",
+    "B": "minecraft:stone_button"
+  },
+  "result": {
+    "id": "webdisplays:linker",
+    "count": 1
+  }
+}

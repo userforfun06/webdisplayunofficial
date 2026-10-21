@@ -1,0 +1,49 @@
+{
+	"schemaVersion": 1,
+	"id": "webdisplays",
+	"version": "${version}",
+	"name": "WebDisplays (Unofficial Port fabric)",
+	"description": "Minecraft mod that lets you display web pages on blocks. Unofficial port by codeninja. Original mod created by montyo, with upstream source by CinemaMod.",
+	"authors": [
+		"codeninja"
+	],
+	"contributors": [
+		"montyo (original creator)",
+		"CinemaMod (upstream source)"
+	],
+	"contact": {
+		"homepage": "https://github.com/userforfun06/webdisplayunofficial",
+		"issues": "https://github.com/userforfun06/webdisplayunofficial/issues"
+	},
+	"license": "MIT",
+	"icon": "assets/webdisplays/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"preLaunch": [],
+		"main": [
+			"net.montoyo.wd.WebDisplays",
+			"net.montoyo.wd.WebDisplaysMod"
+		],
+		"client": [
+			"net.montoyo.wd.client.WebDisplaysClient",
+			"net.montoyo.wd.client.renderers.ScreenModelLoadingPlugin"
+		],
+		"fabric-datagen": [
+			"net.montoyo.wd.WebDisplaysDataGenerator"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.15.0",
+		"fabric-api": ">=0.102.0+1.21",
+		"fabric-renderer-api-v1": "*",
+		"minecraft": [">=1.21", "<=1.21.1"],
+		"java": ">=21",
+		"mcef": "*"
+	},
+	"mixins": [
+		{
+			"config": "webdisplays.client.mixins.json",
+			"environment": "client"
+		}
+	]
+}

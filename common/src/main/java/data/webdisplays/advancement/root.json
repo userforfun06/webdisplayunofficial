@@ -1,0 +1,60 @@
+{
+  "display": {
+    "icon": {
+      "id": "minecraft:glass_pane"
+    },
+    "title": {
+      "translate": "advancements.webdisplays.root.title"
+    },
+    "description": {
+      "translate": "advancements.webdisplays.root.description"
+    },
+    "background": "minecraft:textures/gui/advancements/backgrounds/stone.png",
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "has_glass_pane": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:glass_pane"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "webdisplays:backlight",
+      "webdisplays:batcell",
+      "webdisplays:batpack",
+      "webdisplays:extcard",
+      "webdisplays:keyboard",
+      "webdisplays:laserdiode",
+      "webdisplays:laserpointer",
+      "webdisplays:linker",
+      "webdisplays:minepad",
+      "webdisplays:peripheral",
+      "webdisplays:rctrl",
+      "webdisplays:redctrl1",
+      "webdisplays:screen",
+      "webdisplays:screencfg",
+      "webdisplays:server",
+      "webdisplays:stonekey",
+      "webdisplays:upgrade",
+      "webdisplays:upgrade_laser",
+      "webdisplays:upgrade_redin",
+      "webdisplays:upgrade_redout",
+      "webdisplays:redctrl2",
+      "webdisplays:badextcard",
+      "webdisplays:ownerthief"
+    ]
+  }
+}
+
+

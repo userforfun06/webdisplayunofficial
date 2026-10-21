@@ -1,0 +1,29 @@
+{
+  "display": {
+    "icon": {
+      "id": "webdisplays:component_upgrade"
+    },
+    "title": {
+      "translate": "advancements.webdisplays.upgrade.title"
+    },
+    "description": {
+      "translate": "advancements.webdisplays.upgrade.description"
+    },
+    "frame": "task"
+  },
+  "parent": "webdisplays:screen",
+  "criteria": {
+    "has_upgrade": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "webdisplays:component_upgrade"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

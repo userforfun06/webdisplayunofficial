@@ -1,0 +1,29 @@
+{
+  "display": {
+    "icon": {
+      "id": "webdisplays:minepad"
+    },
+    "title": {
+      "translate": "advancements.webdisplays.minepad.title"
+    },
+    "description": {
+      "translate": "advancements.webdisplays.minepad.description"
+    },
+    "frame": "task"
+  },
+  "parent": "webdisplays:root",
+  "criteria": {
+    "has_minepad": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "webdisplays:minepad"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

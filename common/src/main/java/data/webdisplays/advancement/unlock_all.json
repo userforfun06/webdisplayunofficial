@@ -1,0 +1,34 @@
+{
+  "criteria": {
+    "auto": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "webdisplays:backlight",
+      "webdisplays:batcell",
+      "webdisplays:batpack",
+      "webdisplays:extcard",
+      "webdisplays:keyboard",
+      "webdisplays:laserdiode",
+      "webdisplays:laserpointer",
+      "webdisplays:linker",
+      "webdisplays:minepad",
+      "webdisplays:peripheral",
+      "webdisplays:rctrl",
+      "webdisplays:redctrl1",
+      "webdisplays:screen",
+      "webdisplays:screencfg",
+      "webdisplays:server",
+      "webdisplays:stonekey",
+      "webdisplays:upgrade",
+      "webdisplays:upgrade_laser",
+      "webdisplays:upgrade_redin",
+      "webdisplays:upgrade_redout",
+      "webdisplays:redctrl2",
+      "webdisplays:badextcard",
+      "webdisplays:ownerthief"
+    ]
+  }
+}
