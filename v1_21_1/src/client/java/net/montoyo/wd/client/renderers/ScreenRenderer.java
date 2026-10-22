@@ -15,7 +15,10 @@ import net.minecraft.client.renderer.GameRenderer;
 import com.mojang.blaze3d.vertex.VertexSorting;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.montoyo.wd.WebDisplays;
+<<<<<<< HEAD
 import net.montoyo.wd.client.IrisCompat;
+=======
+>>>>>>> 073cb1c274b88a2a23c7153f77292e6c02a7ca37
 import net.montoyo.wd.entity.ScreenBlockEntity;
 import net.montoyo.wd.entity.ScreenData;
 import net.montoyo.wd.utilities.Multiblock;
@@ -70,6 +73,7 @@ public class ScreenRenderer implements BlockEntityRenderer<ScreenBlockEntity> {
 	private final Vector3f mid = new Vector3f();
 	private final Vector3i tmpi = new Vector3i();
 	private final Vector3f tmpf = new Vector3f();
+<<<<<<< HEAD
 
 	@Override
 	public boolean shouldRenderOffScreen(ScreenBlockEntity te) {
@@ -81,6 +85,11 @@ public class ScreenRenderer implements BlockEntityRenderer<ScreenBlockEntity> {
 		if (IrisCompat.isRenderingShadowPass())
 			return;
 
+=======
+	
+	@Override
+	public void render(ScreenBlockEntity te, float partialTick, @NotNull PoseStack poseStack, @NotNull MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
+>>>>>>> 073cb1c274b88a2a23c7153f77292e6c02a7ca37
 		if (!te.isLoaded())
 			return;
 		
