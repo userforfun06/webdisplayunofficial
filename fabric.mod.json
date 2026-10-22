@@ -1,11 +1,7 @@
 {
 	"schemaVersion": 1,
 	"id": "webdisplays",
-<<<<<<< HEAD
 	"version": "1.0.5",
-=======
-	"version": "1.0.0",
->>>>>>> 073cb1c274b88a2a23c7153f77292e6c02a7ca37
 	"name": "WebDisplays (Unofficial Port fabric)",
 	"description": "Minecraft mod that lets you display web pages on blocks. Unofficial port by codeninja. Original mod created by montyo, with upstream source by CinemaMod.",
 	"authors": [

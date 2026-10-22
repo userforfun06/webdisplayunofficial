@@ -286,7 +286,6 @@ public class ScreenBlockEntity extends BlockEntity {
  	public ScreenData addScreen(BlockSide side, Vector2i size, @Nullable Vector2i resolution, @Nullable Player owner, boolean sendUpdate) {
 		for (ScreenData scr : screens) {
 			if (scr.side == side) {
-<<<<<<< HEAD
 				boolean changed = false;
 				Vector2i targetResolution = resolution;
 
@@ -310,14 +309,11 @@ public class ScreenBlockEntity extends BlockEntity {
 					changed = true;
 				}
 
-=======
->>>>>>> 073cb1c274b88a2a23c7153f77292e6c02a7ca37
 				if (owner != null) {
 					scr.owner = new NameUUIDPair(owner.getGameProfile());
 					if (!level.isClientSide)
 						setChanged();
 				}
-<<<<<<< HEAD
 
 				if (changed) {
 					if (level.isClientSide) {
@@ -333,8 +329,6 @@ public class ScreenBlockEntity extends BlockEntity {
 						setChanged();
 					}
 				}
-=======
->>>>>>> 073cb1c274b88a2a23c7153f77292e6c02a7ca37
 				return scr;
 			}
 		}
@@ -424,7 +418,6 @@ public class ScreenBlockEntity extends BlockEntity {
      */
     public void validateStructureClient() {
         if (!level.isClientSide) return;
-<<<<<<< HEAD
 
         // A newly created client block entity can exist briefly before its screen
         // data arrives from the server. Do not treat that empty state as a broken
@@ -432,9 +425,6 @@ public class ScreenBlockEntity extends BlockEntity {
         // and distance-based unloading never happens.
         boolean hadScreens = !screens.isEmpty();
 
-=======
-        
->>>>>>> 073cb1c274b88a2a23c7153f77292e6c02a7ca37
         for (int i = screens.size() - 1; i >= 0; i--) {
             ScreenData scr = screens.get(i);
             Vector3i origin = new Vector3i(getBlockPos());
@@ -447,13 +437,8 @@ public class ScreenBlockEntity extends BlockEntity {
                 screens.remove(i);
             }
         }
-<<<<<<< HEAD
 
         if (hadScreens && screens.isEmpty()) {
-=======
-        
-        if (screens.isEmpty()) {
->>>>>>> 073cb1c274b88a2a23c7153f77292e6c02a7ca37
             loaded = false;
             WebDisplays.PROXY.trackScreen(this, false);
         }

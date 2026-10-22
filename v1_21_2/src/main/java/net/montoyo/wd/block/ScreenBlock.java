@@ -146,11 +146,7 @@ public class ScreenBlock extends BaseEntityBlock {
 
         if (level.isClientSide) {
             if (hand == InteractionHand.MAIN_HAND && !isUpgrade)
-<<<<<<< HEAD
                 return InteractionResult.SUCCESS;
-=======
-                return InteractionResult.CONSUME;
->>>>>>> 073cb1c274b88a2a23c7153f77292e6c02a7ca37
             return InteractionResult.FAIL;
         }
 
@@ -377,14 +373,11 @@ public class ScreenBlock extends BaseEntityBlock {
 
     private void destroySide(Level world, Vector3i pos, BlockSide side, Multiblock.BlockOverride override, Player
             source) {
-<<<<<<< HEAD
         destroySide(world, pos, side, override, source, false);
     }
 
     private void destroySide(Level world, Vector3i pos, BlockSide side, Multiblock.BlockOverride override, Player
             source, boolean removeStaleEntity) {
-=======
->>>>>>> 073cb1c274b88a2a23c7153f77292e6c02a7ca37
         Multiblock.findOrigin(world, pos, side, override);
         BlockPos bp = pos.toBlock();
         BlockEntity te = world.getBlockEntity(bp);
@@ -392,7 +385,6 @@ public class ScreenBlock extends BaseEntityBlock {
         if (te instanceof ScreenBlockEntity) {
             ((ScreenBlockEntity) te).onDestroy(source);
             if (!world.isClientSide) {
-<<<<<<< HEAD
                 // A newly placed block expands an existing screen by destroying the old
                 // one; the player then re-clicks to create the larger screen. Removing
                 // the old BE is required here: right/up expansions keep the same origin,
@@ -400,8 +392,6 @@ public class ScreenBlock extends BaseEntityBlock {
                 if (removeStaleEntity)
                     world.removeBlockEntity(bp);
 
-=======
->>>>>>> 073cb1c274b88a2a23c7153f77292e6c02a7ca37
                 world.setBlock(bp, world.getBlockState(bp).setValue(hasTE, false), Block.UPDATE_ALL_IMMEDIATE); //Destroy tile entity.
             }
         }
@@ -416,7 +406,6 @@ public class ScreenBlock extends BaseEntityBlock {
     @Override
     public void setPlacedBy(Level world, @NotNull BlockPos pos, @NotNull BlockState
             state, @org.jetbrains.annotations.Nullable LivingEntity whoDidThisShit, @NotNull ItemStack stack) {
-<<<<<<< HEAD
         if (world.isClientSide)
             return;
 
@@ -436,8 +425,6 @@ public class ScreenBlock extends BaseEntityBlock {
                     destroySide(world, neighbor.clone(), bs, override, (whoDidThisShit instanceof Player) ? ((Player) whoDidThisShit) : null, true);
             }
         }
-=======
->>>>>>> 073cb1c274b88a2a23c7153f77292e6c02a7ca37
     }
 
     /************************************************* STUFF THAT'S UNLIKELY TO BE TOUCHED BUT NEEDS TO BE HERE *************************************************/

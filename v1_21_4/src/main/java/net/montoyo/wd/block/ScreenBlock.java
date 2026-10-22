@@ -145,16 +145,11 @@ public class ScreenBlock extends BaseEntityBlock {
             return InteractionResult.FAIL;
 
         if (level.isClientSide) {
-<<<<<<< HEAD
             if (heldItem == null) {
                 if (hand == InteractionHand.MAIN_HAND)
                     return InteractionResult.SUCCESS;
                 return InteractionResult.CONSUME;
             }
-=======
-            if (heldItem == null)
-                return InteractionResult.CONSUME;
->>>>>>> 073cb1c274b88a2a23c7153f77292e6c02a7ca37
             return InteractionResult.SUCCESS;
         }
 
@@ -298,11 +293,7 @@ public class ScreenBlock extends BaseEntityBlock {
         for (Vector3i neighbor : neighbors) {
             if (world.getBlockState(neighbor.toBlock()).getBlock() instanceof ScreenBlock) {
                 for (BlockSide bs : BlockSide.values())
-<<<<<<< HEAD
                     destroySide(world, neighbor.clone(), bs, override, (whoDidThisShit instanceof Player) ? ((Player) whoDidThisShit) : null, true);
-=======
-                    destroySide(world, neighbor.clone(), bs, override, (whoDidThisShit instanceof Player) ? ((Player) whoDidThisShit) : null);
->>>>>>> 073cb1c274b88a2a23c7153f77292e6c02a7ca37
             }
         }
     }
@@ -401,14 +392,11 @@ public class ScreenBlock extends BaseEntityBlock {
 
     private void destroySide(Level world, Vector3i pos, BlockSide side, Multiblock.BlockOverride override, Player
             source) {
-<<<<<<< HEAD
         destroySide(world, pos, side, override, source, false);
     }
 
     private void destroySide(Level world, Vector3i pos, BlockSide side, Multiblock.BlockOverride override, Player
             source, boolean removeStaleEntity) {
-=======
->>>>>>> 073cb1c274b88a2a23c7153f77292e6c02a7ca37
         Multiblock.findOrigin(world, pos, side, override);
         BlockPos bp = pos.toBlock();
         BlockEntity te = world.getBlockEntity(bp);
@@ -416,7 +404,6 @@ public class ScreenBlock extends BaseEntityBlock {
         if (te instanceof ScreenBlockEntity) {
             ((ScreenBlockEntity) te).onDestroy(source);
             if (!world.isClientSide) {
-<<<<<<< HEAD
                 // A newly placed block expands an existing screen by destroying the old
                 // one; the player then re-clicks to create the larger screen. Removing
                 // the old BE is required here: right/up expansions keep the same origin,
@@ -424,8 +411,6 @@ public class ScreenBlock extends BaseEntityBlock {
                 if (removeStaleEntity)
                     world.removeBlockEntity(bp);
 
-=======
->>>>>>> 073cb1c274b88a2a23c7153f77292e6c02a7ca37
                 world.setBlock(bp, world.getBlockState(bp).setValue(hasTE, false), Block.UPDATE_ALL_IMMEDIATE); //Destroy tile entity.
             }
         }
