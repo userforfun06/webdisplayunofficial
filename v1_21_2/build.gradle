@@ -58,8 +58,8 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${rootProject.loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-renderer-api-v1:4.0.3+c47b9d4340"
-    modCompileOnly "maven.modrinth:mcef:2.1.6-1.21.1"
-    modRuntimeOnly "maven.modrinth:mcef:2.1.6-1.21.1"
+    modCompileOnly "maven.modrinth:mcef:2.1.6-1.21.2"
+    modRuntimeOnly "maven.modrinth:mcef:2.1.6-1.21.2"
 }
 
 processResources {

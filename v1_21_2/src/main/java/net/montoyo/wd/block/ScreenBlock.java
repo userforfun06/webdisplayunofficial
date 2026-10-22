@@ -146,7 +146,7 @@ public class ScreenBlock extends BaseEntityBlock {
 
         if (level.isClientSide) {
             if (hand == InteractionHand.MAIN_HAND && !isUpgrade)
-                return InteractionResult.CONSUME;
+                return InteractionResult.SUCCESS;
             return InteractionResult.FAIL;
         }
 
@@ -373,6 +373,11 @@ public class ScreenBlock extends BaseEntityBlock {
 
     private void destroySide(Level world, Vector3i pos, BlockSide side, Multiblock.BlockOverride override, Player
             source) {
+        destroySide(world, pos, side, override, source, false);
+    }
+
+    private void destroySide(Level world, Vector3i pos, BlockSide side, Multiblock.BlockOverride override, Player
+            source, boolean removeStaleEntity) {
         Multiblock.findOrigin(world, pos, side, override);
         BlockPos bp = pos.toBlock();
         BlockEntity te = world.getBlockEntity(bp);
@@ -380,6 +385,13 @@ public class ScreenBlock extends BaseEntityBlock {
         if (te instanceof ScreenBlockEntity) {
             ((ScreenBlockEntity) te).onDestroy(source);
             if (!world.isClientSide) {
+                // A newly placed block expands an existing screen by destroying the old
+                // one; the player then re-clicks to create the larger screen. Removing
+                // the old BE is required here: right/up expansions keep the same origin,
+                // so otherwise the re-click finds the stale ScreenData and never rebuilds.
+                if (removeStaleEntity)
+                    world.removeBlockEntity(bp);
+
                 world.setBlock(bp, world.getBlockState(bp).setValue(hasTE, false), Block.UPDATE_ALL_IMMEDIATE); //Destroy tile entity.
             }
         }
@@ -394,6 +406,25 @@ public class ScreenBlock extends BaseEntityBlock {
     @Override
     public void setPlacedBy(Level world, @NotNull BlockPos pos, @NotNull BlockState
             state, @org.jetbrains.annotations.Nullable LivingEntity whoDidThisShit, @NotNull ItemStack stack) {
+        if (world.isClientSide)
+            return;
+
+        Multiblock.BlockOverride override = new Multiblock.BlockOverride(new Vector3i(pos), Multiblock.OverrideAction.IGNORE);
+        Vector3i[] neighbors = new Vector3i[6];
+
+        neighbors[0] = new Vector3i(pos.getX() + 1, pos.getY(), pos.getZ());
+        neighbors[1] = new Vector3i(pos.getX() - 1, pos.getY(), pos.getZ());
+        neighbors[2] = new Vector3i(pos.getX(), pos.getY() + 1, pos.getZ());
+        neighbors[3] = new Vector3i(pos.getX(), pos.getY() - 1, pos.getZ());
+        neighbors[4] = new Vector3i(pos.getX(), pos.getY(), pos.getZ() + 1);
+        neighbors[5] = new Vector3i(pos.getX(), pos.getY(), pos.getZ() - 1);
+
+        for (Vector3i neighbor : neighbors) {
+            if (world.getBlockState(neighbor.toBlock()).getBlock() instanceof ScreenBlock) {
+                for (BlockSide bs : BlockSide.values())
+                    destroySide(world, neighbor.clone(), bs, override, (whoDidThisShit instanceof Player) ? ((Player) whoDidThisShit) : null, true);
+            }
+        }
     }
 
     /************************************************* STUFF THAT'S UNLIKELY TO BE TOUCHED BUT NEEDS TO BE HERE *************************************************/

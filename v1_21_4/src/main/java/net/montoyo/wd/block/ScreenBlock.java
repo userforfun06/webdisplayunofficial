@@ -145,8 +145,11 @@ public class ScreenBlock extends BaseEntityBlock {
             return InteractionResult.FAIL;
 
         if (level.isClientSide) {
-            if (heldItem == null)
+            if (heldItem == null) {
+                if (hand == InteractionHand.MAIN_HAND)
+                    return InteractionResult.SUCCESS;
                 return InteractionResult.CONSUME;
+            }
             return InteractionResult.SUCCESS;
         }
 

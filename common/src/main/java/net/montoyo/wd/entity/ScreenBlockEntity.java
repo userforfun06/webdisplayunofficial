@@ -418,7 +418,13 @@ public class ScreenBlockEntity extends BlockEntity {
      */
     public void validateStructureClient() {
         if (!level.isClientSide) return;
-        
+
+        // A newly created client block entity can exist briefly before its screen
+        // data arrives from the server. Do not treat that empty state as a broken
+        // screen, otherwise the entity is untracked before handleAddScreen() runs
+        // and distance-based unloading never happens.
+        boolean hadScreens = !screens.isEmpty();
+
         for (int i = screens.size() - 1; i >= 0; i--) {
             ScreenData scr = screens.get(i);
             Vector3i origin = new Vector3i(getBlockPos());
@@ -431,8 +437,8 @@ public class ScreenBlockEntity extends BlockEntity {
                 screens.remove(i);
             }
         }
-        
-        if (screens.isEmpty()) {
+
+        if (hadScreens && screens.isEmpty()) {
             loaded = false;
             WebDisplays.PROXY.trackScreen(this, false);
         }
