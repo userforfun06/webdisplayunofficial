@@ -1,8 +1,0 @@
-{
-  "parent": "block/orientable",
-  "textures": {
-    "top": "webdisplays:block/oci_topbot",
-    "front": "webdisplays:block/oci_front",
-    "side": "webdisplays:block/oci_side"
-  }
-}
