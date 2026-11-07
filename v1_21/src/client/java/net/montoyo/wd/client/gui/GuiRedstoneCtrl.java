@@ -35,10 +35,15 @@ public class GuiRedstoneCtrl extends WDScreen {
 
     @Override
     public void init() {
+        // init() is called again when the window is resized (fullscreen/minimize).
+        // Keep text that was typed but not saved yet instead of reloading the saved values.
+        String pendingRising = tfRisingEdge != null ? tfRisingEdge.getText() : null;
+        String pendingFalling = tfFallingEdge != null ? tfFallingEdge.getText() : null;
+
         super.init();
         loadFrom(ResourceLocation.fromNamespaceAndPath("webdisplays", "gui/redstonectrl.json"));
-        tfRisingEdge.setText(risingEdgeURL);
-        tfFallingEdge.setText(fallingEdgeURL);
+        tfRisingEdge.setText(pendingRising != null ? pendingRising : risingEdgeURL);
+        tfFallingEdge.setText(pendingFalling != null ? pendingFalling : fallingEdgeURL);
     }
 
     @GuiSubscribe

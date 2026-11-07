@@ -4,6 +4,7 @@ import com.cinemamod.mcef.MCEF;
 import com.cinemamod.mcef.MCEFBrowser;
 import org.cef.browser.CefBrowser;
 import org.cef.browser.CefMessageRouter;
+import net.montoyo.wd.utilities.browser.handlers.DarkModeHintHandler;
 import net.montoyo.wd.utilities.browser.handlers.DisplayHandler;
 import net.montoyo.wd.utilities.browser.handlers.WDRouter;
 import com.mojang.authlib.GameProfile;
@@ -368,6 +369,12 @@ public class ClientProxy extends SharedProxy implements ResourceManagerReloadLis
 			Log.info("[WebDisplays] DisplayHandler registered successfully");
 		} catch (Exception e) {
 			Log.error("[WebDisplays] Failed to register DisplayHandler: %s", e.getMessage());
+		}
+		try {
+			MCEF.getClient().getHandle().addRequestHandler(DarkModeHintHandler.INSTANCE);
+			Log.info("[WebDisplays] DarkModeHintHandler registered successfully");
+		} catch (Exception e) {
+			Log.error("[WebDisplays] Failed to register DarkModeHintHandler: %s", e.getMessage());
 		}
 		MCEF.getClient().getHandle().addMessageRouter(CefMessageRouter.create(WDRouter.INSTANCE));
 	}

@@ -79,6 +79,10 @@ public class GuiSetURL2 extends WDScreen {
 
 	@Override
 	public void init() {
+		// init() is called again when the window is resized (fullscreen/minimize).
+		// Keep text that was typed but not saved yet instead of reloading the saved URL.
+		String pendingUrl = tfURL != null ? tfURL.getText() : null;
+
 		super.init();
 		loadFrom(ResourceLocation.fromNamespaceAndPath("webdisplays", "gui/seturl.json"));
 		if (tfURL != null) {
@@ -89,7 +93,7 @@ public class GuiSetURL2 extends WDScreen {
 					urlToShow = scr.url;
 				}
 			}
-			tfURL.setText(urlToShow);
+			tfURL.setText(pendingUrl != null ? pendingUrl : urlToShow);
 		}
 	}
 

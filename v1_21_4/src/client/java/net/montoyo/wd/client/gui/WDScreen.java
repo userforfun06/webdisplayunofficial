@@ -287,6 +287,12 @@ public abstract class WDScreen extends Screen {
         vars.put("displayHeight", (double) minecraft.getWindow().getHeight());
         addLoadCustomVariables(vars);
 
+        // init() runs again when the window is resized (fullscreen/minimize).
+        // Destroy the old controls before dropping them so GPU resources
+        // (e.g. the List framebuffer) are released instead of leaked.
+        for(Control ctrl : controls)
+            ctrl.destroy();
+
         controls.clear();
         postDrawList.clear();
         JsonArray content = root.get("controls").getAsJsonArray();

@@ -139,6 +139,12 @@ public class GuiScreenConfig extends WDScreen {
 
     @Override
     public void init() {
+        // init() is called again when the window is resized (fullscreen/minimize).
+        // Keep text that was typed but not saved yet instead of reloading the saved values.
+        String pendingFriend = tfFriend != null ? tfFriend.getText() : null;
+        String pendingResX = tfResX != null ? tfResX.getText() : null;
+        String pendingResY = tfResY != null ? tfResY.getText() : null;
+
         super.init();
         loadFrom(ResourceLocation.fromNamespaceAndPath("webdisplays", "gui/screencfg.json"));
 
@@ -181,6 +187,13 @@ public class GuiScreenConfig extends WDScreen {
         updateRights(otherRights, otherRights, otherBoxes, true);
         updateMyRights();
         updateRotationStr();
+
+        if (pendingFriend != null)
+            tfFriend.setText(pendingFriend);
+        if (pendingResX != null)
+            tfResX.setText(pendingResX);
+        if (pendingResY != null)
+            tfResY.setText(pendingResY);
 
         if (firstInit) {
             firstInit = false;

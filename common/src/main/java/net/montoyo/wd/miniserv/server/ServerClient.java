@@ -13,12 +13,14 @@ import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 import java.nio.file.Files;
 import java.util.Arrays;
+import java.util.Properties;
 import java.util.UUID;
 import java.util.function.Consumer;
 
 public class ServerClient extends AbstractClient {
 
     private static final byte[] FILE_UPLOAD_BUFFER = new byte[65536];
+    private static final String SHARED_LIST_FILE = ".shared";
 
     private byte[] challenge;
     private UUID uuid;
@@ -211,7 +213,7 @@ public class ServerClient extends AbstractClient {
 
     @PacketHandler(PacketID.GET_FILE)
     public void handleGetFile(DataInputStream dis) throws IOException {
-        if(isAuthenticated && currentFile == null) {
+        if(isAuthenticated && currentFile == null && !sendingFile) {
             long msb = dis.readLong();
             long lsb = dis.readLong();
             String fname = readString(dis);
@@ -225,8 +227,15 @@ public class ServerClient extends AbstractClient {
             else {
                 UUID user = new UUID(msb, lsb);
                 File fle = new File(Server.getInstance().getDirectory(), user.toString() + File.separatorChar + fname);
+                boolean owner = user.equals(uuid);
 
-                if(doQuery) {
+                // Files stay private unless their owner has shared them (using the "url" command).
+                // Refuse cross-user access to unshared files, but reply "not found" so that the
+                // existence of private files is not leaked.
+                if(!owner && !(fle.isFile() && isShared(fle))) {
+                    Log.warning("Client %s tried to download unshared file '%s' owned by %s", uuid.toString(), fname, user.toString());
+                    rep.writeByte(Constants.GETF_STATUS_NOT_FOUND);
+                } else if(doQuery) {
                     try {
                         rep.setOnFinishAction(new SendFileCallback(fle));
                         rep.writeByte(0);
@@ -234,12 +243,61 @@ public class ServerClient extends AbstractClient {
                     } catch(FileNotFoundException ex) {
                         rep.writeByte(Constants.GETF_STATUS_NOT_FOUND);
                     }
-                } else
-                    rep.writeByte((fle.exists() && fle.isFile()) ? 0 : Constants.GETF_STATUS_NOT_FOUND);
+                } else {
+                    boolean exists = fle.exists() && fle.isFile();
+
+                    if(owner && exists && !markShared(fle))
+                        rep.writeByte(Constants.GETF_STATUS_INTERNAL_ERROR);
+                    else
+                        rep.writeByte(exists ? 0 : Constants.GETF_STATUS_NOT_FOUND);
+                }
             }
 
             sendPacket(rep);
         }
+    }
+
+    private boolean isShared(File fle) {
+        File sharedList = new File(fle.getParentFile(), SHARED_LIST_FILE);
+        if(!sharedList.isFile())
+            return false;
+
+        Properties props = new Properties();
+        try(FileInputStream fis = new FileInputStream(sharedList)) {
+            props.load(fis);
+        } catch(IOException ex) {
+            Log.warningEx("Could not read shared files list %s", ex, sharedList.getAbsolutePath());
+            return false;
+        }
+
+        String shareKey = props.getProperty(fle.getName());
+        return shareKey != null && shareKey.equals(fle.length() + ":" + fle.lastModified());
+    }
+
+    private boolean markShared(File fle) {
+        File sharedList = new File(fle.getParentFile(), SHARED_LIST_FILE);
+        Properties props = new Properties();
+
+        if(sharedList.isFile()) {
+            try(FileInputStream fis = new FileInputStream(sharedList)) {
+                props.load(fis);
+            } catch(IOException ex) {
+                Log.warningEx("Could not read shared files list %s", ex, sharedList.getAbsolutePath());
+                return false;
+            }
+        }
+
+        // The size + modification time pair ensures a re-uploaded file is not shared automatically.
+        props.setProperty(fle.getName(), fle.length() + ":" + fle.lastModified());
+
+        try(FileOutputStream fos = new FileOutputStream(sharedList)) {
+            props.store(fos, "WebDisplays shared files (name=size:lastModified)");
+        } catch(IOException ex) {
+            Log.warningEx("Could not write shared files list %s", ex, sharedList.getAbsolutePath());
+            return false;
+        }
+
+        return true;
     }
 
     @PacketHandler(PacketID.QUOTA)

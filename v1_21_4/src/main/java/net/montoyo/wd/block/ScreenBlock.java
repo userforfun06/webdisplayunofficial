@@ -145,19 +145,16 @@ public class ScreenBlock extends BaseEntityBlock {
             return InteractionResult.FAIL;
 
         if (level.isClientSide) {
-            if (heldItem == null) {
-                if (hand == InteractionHand.MAIN_HAND)
-                    return InteractionResult.SUCCESS;
-                return InteractionResult.CONSUME;
-            }
-            return InteractionResult.SUCCESS;
+            if (heldItem == null)
+                return InteractionResult.CONSUME; // Empty hand must not swing/loop; server still handles screen creation
+            return InteractionResult.SUCCESS; // Upgrade items still show the hand swing (1.21.1 parity)
         }
 
         if (hand == InteractionHand.OFF_HAND && !isUpgrade)
             return InteractionResult.FAIL;
 
         InteractionResult result = useWithoutItem(state, level, pos, player, hit);
-        return result == InteractionResult.SUCCESS ? InteractionResult.SUCCESS : 
+        return result == InteractionResult.SUCCESS ? InteractionResult.SUCCESS_SERVER : 
                result == InteractionResult.CONSUME ? InteractionResult.CONSUME :
                result == InteractionResult.PASS ? InteractionResult.PASS :
                InteractionResult.FAIL;

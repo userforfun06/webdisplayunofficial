@@ -146,7 +146,9 @@ public class ScreenBlock extends BaseEntityBlock {
 
         if (level.isClientSide) {
             if (hand == InteractionHand.MAIN_HAND && !isUpgrade)
-                return InteractionResult.SUCCESS;
+                return InteractionResult.CONSUME;
+            if (isUpgrade)
+                return InteractionResult.SUCCESS; // 1.21.1 parity: upgrade items still show the hand swing
             return InteractionResult.FAIL;
         }
 
@@ -154,7 +156,7 @@ public class ScreenBlock extends BaseEntityBlock {
             return InteractionResult.FAIL;
 
         InteractionResult result = useWithoutItem(state, level, pos, player, hit);
-        return result == InteractionResult.SUCCESS ? InteractionResult.SUCCESS : 
+        return result == InteractionResult.SUCCESS ? InteractionResult.SUCCESS_SERVER : 
                result == InteractionResult.CONSUME ? InteractionResult.CONSUME :
                result == InteractionResult.PASS ? InteractionResult.PASS :
                InteractionResult.FAIL;
